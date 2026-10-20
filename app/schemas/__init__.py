@@ -1,0 +1,52 @@
+from app.schemas.events import (
+    EventBase,
+    EventCreate,
+    EventResponse,
+    EventSeverityEnum,
+    EventTimeWindow,
+    EventTimelineDetailResponse,
+    EventTimelineGroup,
+    EventTypeEnum,
+    PaginatedEventsResponse,
+)
+from app.schemas.health import HealthResponse
+from app.schemas.query import QueryRequest, QueryResponse
+from app.schemas.vehicle import (
+    DashboardStatsResponse,
+    DrivingModeEnergyMetric,
+    EnergyAnalyticsResponse,
+    EnergyDataPointResponse,
+    RecentEventCounts,
+    TelemetrySnapshot,
+    VehicleBase,
+    VehicleCreate,
+    VehicleResponse,
+    VehicleStatusEnum,
+    VehicleSummaryResponse,
+)
+
+__all__ = [
+    "HealthResponse",
+    "VehicleStatusEnum",
+    "VehicleBase",
+    "VehicleCreate",
+    "VehicleResponse",
+    "VehicleSummaryResponse",
+    "TelemetrySnapshot",
+    "RecentEventCounts",
+    "DashboardStatsResponse",
+    "DrivingModeEnergyMetric",
+    "EnergyAnalyticsResponse",
+    "EnergyDataPointResponse",
+    "EventTypeEnum",
+    "EventSeverityEnum",
+    "EventBase",
+    "EventCreate",
+    "EventResponse",
+    "PaginatedEventsResponse",
+    "EventTimeWindow",
+    "EventTimelineDetailResponse",
+    "EventTimelineGroup",
+    "QueryRequest",
+    "QueryResponse",
+]
