@@ -1,6 +1,6 @@
 import os
 from pathlib import Path
-from typing import List, Union
+from typing import List, Optional, Union
 
 from pydantic import field_validator
 from pydantic_settings import BaseSettings, SettingsConfigDict
@@ -24,6 +24,19 @@ class Settings(BaseSettings):
 
     # Database (Default: backend/data/vehicle.db)
     DATABASE_URL: str = "sqlite:///./data/vehicle.db"
+
+    # Dedicated Local Ollama LLM Configuration
+    LLM_PROVIDER: str = "ollama"
+    OLLAMA_BASE_URL: str = "http://localhost:11434"
+    OLLAMA_MODEL: str = "llama3.2:3b"
+    OLLAMA_TIMEOUT_SECONDS: float = 60.0  # Dedicated timeout for LLM inference (seconds)
+    OLLAMA_KEEP_ALIVE: str = "5m"  # Keep model in memory after inference for warm requests
+
+    # Cloud Groq LLM Configuration (Zero-Cost Fast Cloud Deployment)
+    GROQ_API_KEY: Optional[str] = None
+    GROQ_MODEL: str = "qwen/qwen3.8-27b"
+    GROQ_BASE_URL: str = "https://api.groq.com/openai/v1"
+    GROQ_TIMEOUT_SECONDS: float = 30.0
 
     model_config = SettingsConfigDict(
         env_file=".env",

@@ -87,13 +87,42 @@ uvicorn app.main:app --reload --port 8000
 - Interactive Swagger UI: `http://localhost:8000/docs`
 - Health Check: `http://localhost:8000/api/health`
 
-### 4. Run the Pytest Test Suite
-```bash
-pytest -v
+### 4. Configure Local Ollama Inference (Zero Cloud Egress)
+
+VehicleGPT uses local Ollama with `llama3.2:3b` for natural language telemetry synthesis grounded strictly in verified database records and analytics.
+
+#### Step 1: Install Ollama & Pull Model
+1. Install Ollama from [ollama.com](https://ollama.com).
+2. Pull the recommended local model:
+   ```bash
+   ollama pull llama3.2:3b
+   ```
+3. Ensure the local Ollama daemon is active (default port 11434):
+   ```bash
+   ollama serve
+   ```
+
+#### Step 2: Configure Environment Variables
+Set the following variables in `.env` (already configured in `.env.example`):
+```ini
+LLM_PROVIDER=ollama
+OLLAMA_BASE_URL=http://localhost:11434
+OLLAMA_MODEL=llama3.2:3b
+OLLAMA_TIMEOUT_SECONDS=60.0
 ```
-To run with coverage:
+
+> **Fallback Mode**: If Ollama is offline, unreachable, or the model is not downloaded, VehicleGPT automatically falls back to deterministic telemetry calculation algorithms with clear diagnostic notices.
+
+### 5. Run the Pytest Test Suite
 ```bash
-pytest -v --tb=short
+# Run mocked unit tests (requires no running Ollama or downloaded model)
+pytest tests/test_ollama_service.py -v
+
+# Run live local Ollama model integration tests
+pytest tests/test_ollama_integration.py -v
+
+# Run the complete test suite
+pytest -v
 ```
 
 ---
@@ -109,7 +138,8 @@ pytest -v --tb=short
 | `GET` | `/api/dashboard/stats` | Aggregated fleet KPIs for the dashboard |
 | `GET` | `/api/events` | Filtered telemetry events (by severity, type, vehicle) |
 | `GET` | `/api/events/timeline/faults` | Fault timeline grouping critical and warning alerts |
-| `GET` | `/api/analytics/energy` | 24h consumption & regeneration data points |
+| `GET` | `/api/analytics/energy` | Driving mode comparative consumption (kWh/100 km) & regen |
 | `GET` | `/api/analytics/efficiency` | Fleet energy regeneration ratio & net metrics |
-| `POST` | `/api/query` | Natural language telemetry query router |
+| `POST` | `/api/query` | Natural language telemetry query router (Local Ollama grounded) |
 | `POST` | `/api/assistant/chat` | VehicleGPT conversational assistant endpoint |
+

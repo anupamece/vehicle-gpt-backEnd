@@ -1,13 +1,16 @@
 import datetime
 from typing import Any, Dict, List, Optional
 
-from pydantic import BaseModel, Field, model_validator
+from pydantic import BaseModel, ConfigDict, Field, model_validator
 
 
 class QueryRequest(BaseModel):
     """Stable request schema for POST /api/query."""
 
+    model_config = ConfigDict(populate_by_name=True)
+
     question: str = Field(..., min_length=1, description="Natural language user question or query")
+    vehicle_id: Optional[str] = Field(None, alias="vehicleId", description="Optional vehicle context ID")
 
     # Optional alias support for backward compatibility
     @model_validator(mode="before")

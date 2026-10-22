@@ -21,7 +21,9 @@ def process_query(
 
     battery health, diagnostic faults, and energy analytics.
     """
-    return route_natural_language_query(db=db, question=payload.question)
+    return route_natural_language_query(
+        db=db, question=payload.question, vehicle_id=payload.vehicle_id
+    )
 
 
 @router.post(
@@ -35,4 +37,6 @@ def chat_assistant(
     db: Session = Depends(get_db),
 ) -> QueryResponse:
     """Conversational endpoint compatible with frontend chat panels."""
-    return route_natural_language_query(db=db, question=payload.question)
+    return route_natural_language_query(
+        db=db, question=payload.question, vehicle_id=payload.vehicle_id
+    )

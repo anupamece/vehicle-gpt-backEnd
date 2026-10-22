@@ -1,0 +1,32 @@
+# Python bytecode & cache
+__pycache__/
+*.py[cod]
+*$py.class
+*.so
+
+# Environments
+.venv/
+venv/
+ENV/
+env/
+
+# Environment variables & secrets (CRITICAL: Never commit API keys!)
+.env
+.env.*
+!.env.example
+
+# Database files (generated automatically at runtime)
+data/*.db
+data/*.sqlite
+data/*.sqlite3
+
+# Testing & Coverage
+.pytest_cache/
+.coverage
+htmlcov/
+
+# IDE & OS
+.vscode/
+.idea/
+.DS_Store
+Thumbs.db

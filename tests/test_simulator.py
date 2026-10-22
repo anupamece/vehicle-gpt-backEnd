@@ -117,7 +117,7 @@ def test_battery_overheating_scenario_with_thermal_history(sim_db: Session):
             TelemetryModel.timestamp > overheat_event.timestamp,
         )
         .order_by(TelemetryModel.timestamp.asc())
-        .limit(20)
+        .limit(40)
         .all()
     )
     assert len(post_telemetry) > 0
